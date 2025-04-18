@@ -1,20 +1,13 @@
-// Import required modules
 const express = require('express');
 const axios = require('axios');
 
-// Initialize express application
 const app = express();
 const PORT = process.env.PORT || 9876;
-
-// Configuration
 const WINDOW_SIZE = 10;
-const REQUEST_TIMEOUT = 500; // ms
+const REQUEST_TIMEOUT = 500;
 const TEST_SERVER_BASE_URL = 'http://20.244.56.144/evaluation-service';
-
-// Access token (you can fetch dynamically if needed)
 const ACCESS_TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJNYXBDbGFpbXMiOnsiZXhwIjoxNzQ0OTU2OTY2LCJpYXQiOjE3NDQ5NTY2NjYsImlzcyI6IkFmZm9yZG1lZCIsImp0aSI6IjVjNWI0MDNlLWZkMzgtNDJiZC1hMjVkLWRiZjhkZjY2NDdmNCIsInN1YiI6ImRldmFuc2guc2hhcm1hMV9jczIyQGdsYS5hYy5pbiJ9LCJlbWFpbCI6ImRldmFuc2guc2hhcm1hMV9jczIyQGdsYS5hYy5pbiIsIm5hbWUiOiJkZXZhbnNoIHNoYXJtYSIsInJvbGxObyI6IjIyMTUwMDA1ODIiLCJhY2Nlc3NDb2RlIjoiQ05uZUdUIiwiY2xpZW50SUQiOiI1YzViNDAzZS1mZDM4LTQyYmQtYTI1ZC1kYmY4ZGY2NjQ3ZjQiLCJjbGllbnRTZWNyZXQiOiJXR2RkdWVBTWJXckV0V3d1In0.Wq-3MylizKeDiFfLvJcLK-Rf1DhgW8lIhD9_VhyCSuk";
 
-// Store for our numbers
 class NumbersStore {
   constructor(windowSize) {
     this.windowSize = windowSize;
@@ -45,7 +38,6 @@ class NumbersStore {
   }
 }
 
-// Map to store number stores for different types
 const stores = {
   'p': new NumbersStore(WINDOW_SIZE),
   'f': new NumbersStore(WINDOW_SIZE),
@@ -53,7 +45,6 @@ const stores = {
   'r': new NumbersStore(WINDOW_SIZE)
 };
 
-// Fetch numbers from the test server API with token
 async function fetchNumbers(type) {
   const endpoints = {
     'p': `${TEST_SERVER_BASE_URL}/primes`,
@@ -77,7 +68,6 @@ async function fetchNumbers(type) {
   }
 }
 
-// Route for processing number requests
 app.get('/numbers/:type', async (req, res) => {
   const { type } = req.params;
 
@@ -100,7 +90,6 @@ app.get('/numbers/:type', async (req, res) => {
   res.json(response);
 });
 
-// Start the server
 app.listen(PORT, () => {
   console.log(`Average Calculator service running on port ${PORT}`);
 });
